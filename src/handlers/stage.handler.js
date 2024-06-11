@@ -3,13 +3,12 @@ import { getStage, setStage } from '../models/stage.model.js';
 
 export const moveStageHandler = (userId, payload) => {
   let currentStages = getStage(userId);
+  const { stages } = getGameAssets();
 
-  console.log('!!!' + currentStages);
   if (!currentStages.length) {
     return { status: 'fail', message: 'No stages found for user' };
   }
 
-  console.log(payload);
   currentStages.sort((a, b) => a.id - b.id);
   const currentStage = currentStages[currentStages.length - 1];
 
@@ -19,19 +18,21 @@ export const moveStageHandler = (userId, payload) => {
 
   // 점수 검증
   const serverTime = Date.now();
-  const elapsedTime = (serverTime - currentStage.timeStamp) / 1000;
+  const elapsedTime =
+    (serverTime - currentStage.timeStamp) / 1000 / currentStages[currentStages.length];
 
-  if (elapsedTime < 9.5 || elapsedTime > 10.5) {
-    console.log(elapsedTime);
+  if (
+    elapsedTime < stages['data'][currentStages.length]['score'] - 0.5 ||
+    elapsedTime > stages['data'][currentStages.length]['score'] + 0.5
+  ) {
     return { status: 'fail', message: 'invalid elapsed time' };
   }
 
   //  targetStage 검증
-  const { stages } = getGameAssets();
   if (!stages.data.some((stage) => stage.id === payload.targetStage)) {
     return { status: 'fail', message: 'Target stage not found' };
   }
 
   setStage(userId, payload.targetStage, serverTime);
-  return { currentStage: currentStage.id };
+  return { status: 'success' };
 };

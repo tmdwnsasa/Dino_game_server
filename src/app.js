@@ -21,7 +21,6 @@ app.get('/', (req, res) => {
 server.listen(PORT, async () => {
   try {
     const assets = await loadGameAssets();
-    console.log(assets);
   } catch (err) {
     console.log('Failed to load game assets');
   }

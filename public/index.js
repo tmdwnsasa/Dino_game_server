@@ -38,9 +38,11 @@ const CACTI_CONFIG = [
 // 아이템
 const ITEM_CONFIG = [
   { width: 50 / 1.5, height: 50 / 1.5, id: 1, image: 'images/items/pokeball_red.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_yellow.png' },
-  { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_purple.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 2, image: 'images/items/pokeball_orange.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 3, image: 'images/items/pokeball_yellow.png' },
   { width: 50 / 1.5, height: 50 / 1.5, id: 4, image: 'images/items/pokeball_cyan.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 5, image: 'images/items/pokeball_purple.png' },
+  { width: 50 / 1.5, height: 50 / 1.5, id: 6, image: 'images/items/pokeball_pink.png' },
 ];
 
 // 게임 요소들
@@ -202,7 +204,7 @@ function gameLoop(currentTime) {
     // 땅이 움직임
     ground.update(gameSpeed, deltaTime);
     // 선인장
-    //cactiController.update(gameSpeed, deltaTime);
+    cactiController.update(gameSpeed, deltaTime);
     itemController.update(gameSpeed, deltaTime);
     // 달리기
     player.update(gameSpeed, deltaTime);

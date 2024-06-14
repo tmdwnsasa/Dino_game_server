@@ -4,6 +4,7 @@ import { createItem } from '../models/item.model.js';
 import { createStage, setStage } from '../models/stage.model.js';
 import { getUser, removeUser } from '../models/user.model.js';
 import handlerMappings from './handlerMapping.js';
+import { highScore } from './score.handler.js';
 
 export const handleDiscnnect = (socket, uuid) => {
   removeUser(socket.id);
@@ -18,7 +19,7 @@ export const handleConnection = (socket, uuid) => {
   createStage(uuid);
   createItem(uuid);
 
-  socket.emit('connection', { uuid });
+  socket.emit('connection', { uuid, highScore });
 };
 
 export const handlerEvent = (io, socket, data) => {
@@ -35,7 +36,7 @@ export const handlerEvent = (io, socket, data) => {
 
   const response = handler(data.userId, data.payload);
   if (response.broadcast) {
-    io.emit('response', 'broadcast');
+    io.emit('response', response);
     return;
   }
 

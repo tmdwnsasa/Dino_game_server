@@ -1,6 +1,8 @@
-let HighScore = 0;
+export let highScore = 0;
 
 export const setHighScore = (uuid, payload) => {
-  if (HighScore < payload.score) HighScore = payload.score;
-  return { status: 'success' };
+  if (highScore < payload.broadcast) {
+    highScore = payload.broadcast;
+  }
+  return { broadcast: highScore, status: 'success' };
 };

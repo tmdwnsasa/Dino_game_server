@@ -4,6 +4,11 @@ import itemData from './assets/item.json' with { type: 'json' };
 import unlockData from './assets/item_unlock.json' with { type: 'json' };
 
 export let currentStage = 0;
+let highScore = 0;
+
+export const setHS = (score) => {
+  highScore = score;
+};
 
 class Score {
   score = 0;
@@ -64,12 +69,9 @@ class Score {
   }
 
   setHighScore() {
-    const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
-    if (this.score > highScore) {
-      localStorage.setItem(this.HIGH_SCORE_KEY, Math.floor(this.score));
-    }
+    if (highScore < this.score) highScore = Math.floor(this.score).toString().padStart(6, 0);
     sendEvent(31, {
-      score: this.score,
+      broadcast: Math.floor(this.score).toString().padStart(6, 0),
     });
   }
 
@@ -78,7 +80,6 @@ class Score {
   }
 
   draw() {
-    const highScore = Number(localStorage.getItem(this.HIGH_SCORE_KEY));
     const y = 20 * this.scaleRatio;
 
     const fontSize = 20 * this.scaleRatio;
